@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 import requests
+import pandas as pd
 #from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 
@@ -25,8 +26,9 @@ st.write("The name on zour Smoothie will be ", title)
 cnx =  st.connection("snowflake")
 session = cnx.session()
 #get_active_session()
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
-
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
+st.dataframe(data=my_dataframe,use_container_width=True)
+st.stop()
 ingredients_list = st.multiselect('Choose up to 5 ingredients:',my_dataframe,max_selections = 5)
 
 ingredients_string = ''
@@ -39,6 +41,7 @@ for fruit_chosen in ingredients_list:
   smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
   #st.text(smoothiefroot_response)
   sf_df=st.dataframe(data=smoothiefroot_response.json(),use_container_width=True)
+ 
   
 #st.dataframe(data=my_dataframe, use_container_width=True)
 
