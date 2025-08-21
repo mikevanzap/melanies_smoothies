@@ -41,8 +41,7 @@ for fruit_chosen in ingredients_list:
 #st.dataframe(data=my_dataframe, use_container_width=True)
 
 
-my_insert_stmt = """ insert into smoothies.public.orders(ingredients,name_on_order)
-  values ('""" + ingredients_string + """','""" + title + """')"""
+my_insert_stmt = """ insert into smoothies.public.orders(ingredients,name_on_order) values ('""" + ingredients_string + """','""" + title + """')"""
 
 st.write(my_insert_stmt)
 
